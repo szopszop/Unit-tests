@@ -26,7 +26,7 @@ class MealTest {
 
     @Test
     void referencesToTheSameObjectShouldNotBeTheSameObject() {
-        // given + when
+        // given
          Meal meal1 = new Meal(10);
          Meal meal2 = new Meal(10);
 
@@ -41,7 +41,7 @@ class MealTest {
 
     @Test
     void twoMealsShouldBeEqualWhenPriceAndNameMatch() {
-        // given + when
+        // given
         Meal meal1 = new Meal(10, "Pizza");
         Meal meal2 = new Meal(10, "Pizza");
 
@@ -50,7 +50,7 @@ class MealTest {
     }
     @Test
     void referenceToTheSameObjectShouldBeEqual() {
-        // given + when
+        // given
         Meal meal1 = new Meal(10, "Pizza");
         Meal meal2 = meal1;
 
@@ -64,8 +64,6 @@ class MealTest {
         Meal meal = new Meal(8, "Soup");
         // then
         assertThrows(IllegalArgumentException.class, () -> meal.getDiscountedPrice(10));
-
     }
-
 
 }
