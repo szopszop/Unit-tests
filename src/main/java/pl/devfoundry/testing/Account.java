@@ -3,11 +3,9 @@ package pl.devfoundry.testing;
 public class Account {
 
     private boolean active;
-    private Address defaultDeliveryAddress;
+    private String email;
 
-    public void setDefaultDeliveryAddress(Address defaultDeliveryAddress) {
-        this.defaultDeliveryAddress = defaultDeliveryAddress;
-    }
+    private Address defaultDeliveryAddress;
 
     public Account(Address defaultDeliveryAddress) {
         this.defaultDeliveryAddress = defaultDeliveryAddress;
@@ -16,6 +14,22 @@ public class Account {
         } else {
             this.active = false;
         }
+    }
+
+    public void setEmail(String email) {
+        if (email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9._]+\\.[A-Za-z]{2,6}$")) {
+            this.email = email;
+        } else {
+            throw new IllegalArgumentException("Wrong email format");
+        }
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setDefaultDeliveryAddress(Address defaultDeliveryAddress) {
+        this.defaultDeliveryAddress = defaultDeliveryAddress;
     }
 
     public Address getDefaultDeliveryAddress() {

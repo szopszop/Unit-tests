@@ -3,7 +3,8 @@ package pl.devfoundry.testing;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumingThat;
 
@@ -71,5 +72,32 @@ class AccountTest {
         });
     }
 
+    @Test
+    void invalidEmailShouldThrowException() {
+        // given
+        Account account = new Account();
+        // when
+        //then
+        assertThrows(IllegalArgumentException.class, ()-> account.setEmail("Wrong email format"));
+    }
+
+    @Test
+    void validEmailShouldBeSet() {
+        // given
+        Account account = new Account();
+        // when
+        account.setEmail("szymontracz1@gmail.com");
+        // then
+        assertThat(account.getEmail(), is("szymontracz1@gmail.com"));
+    }
+
+    @Test
+    void accountWithoutAddressShouldNotBeActive() {
+        // given
+        Account account = new Account(null);
+        // when
+        // then
+        assertThat(account.isActive(), is(false));
+    }
 
 }
