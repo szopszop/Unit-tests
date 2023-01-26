@@ -9,7 +9,7 @@ public class Order {
 
     private List<Meal> meals = new ArrayList<>();
 
-
+    private OrderStatus orderStatus;
     public void addMealToOrder(Meal meal) {
         this.meals.add(meal);
     }
@@ -35,6 +35,14 @@ public class Order {
         } else {
             return sum;
         }
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
     @Override
