@@ -5,7 +5,18 @@ import java.util.Objects;
 public class Meal {
 
     private int price;
+    private int quantity;
+
     private String name;
+
+    public Meal(int price, int quantity, String name) {
+        this.price = price;
+        this.quantity = quantity;
+        this.name = name;
+    }
+
+    public Meal() {
+    }
 
     public Meal(int price, String name) {
         this.price = price;
@@ -14,6 +25,10 @@ public class Meal {
 
     public Meal(int price) {
         this.price = price;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 
     public int getPrice() {
@@ -46,5 +61,9 @@ public class Meal {
                 "price=" + price +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    public int sumPrice() {
+        return getPrice() * getQuantity();
     }
 }

@@ -5,6 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.Spy;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,8 +15,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 
 class MealTest {
+
+    @Spy
+    private Meal mealSpy;
 
     @Test
     void shouldReturnDiscountedPrice() {
@@ -101,9 +109,65 @@ class MealTest {
         assertThat(name, endsWith("cake"));
     }
 
+    @Test
+    void testMealSumPrice() {
+        // given
+        Meal meal = mock(Meal.class);
+
+        given(meal.getPrice()).willReturn(15);
+        given(meal.getQuantity()).willReturn(3);
+
+        given(meal.sumPrice()).willCallRealMethod();
+
+        // when
+        int result = meal.sumPrice();
+
+        // then
+        assertThat(result, equalTo(45));
+    }
+
     private static Stream<String> createCakeNames() {
         List<String> cakeNames = Arrays.asList("Cheesecake", "Fruitcake", "Cupcake");
         return cakeNames.stream();
+    }
+
+    @Test
+    void testMealSumPriceWithSpy() {
+        // given
+        Meal meal = spy(Meal.class);
+
+        given(meal.getPrice()).willReturn(15);
+        given(meal.getQuantity()).willReturn(3);
+
+//        given(meal.sumPrice()).willCallRealMethod();
+
+        // when
+        int result = meal.sumPrice();
+
+        // then
+        then(meal).should().getPrice();
+        then(meal).should().getQuantity();
+        assertThat(result, equalTo(45));
+    }
+
+    @Test
+    void testMealSumPriceWithSpyWithSpecificConstructor() {
+        // given
+        Meal meal = new Meal(15, 3, "Burrito");
+        Meal mealSpy = spy(meal);
+
+        given(mealSpy.getPrice()).willReturn(15);
+        given(mealSpy.getQuantity()).willReturn(3);
+
+//        given(meal.sumPrice()).willCallRealMethod();
+
+        // when
+        int result = mealSpy.sumPrice();
+
+        // then
+        then(mealSpy).should().getPrice();
+        then(mealSpy).should().getQuantity();
+        assertThat(result, equalTo(45));
     }
 
 }
